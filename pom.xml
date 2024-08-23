@@ -93,10 +93,7 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>**/TestFood.java</includes>
-                    <!--suppress UnresolvedMavenProperty -->
                     <argLine>
-                        -Xml1024m
-                        -Dfile.encoding=${encoding.type}
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.20/aspectjweaver-1.9.20.jar"
                     </argLine>
                     <systemPropertyVariables>

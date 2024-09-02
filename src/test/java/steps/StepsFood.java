@@ -7,21 +7,43 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class StepsFood {
 
 WebDriver driver;
 
+    public static RemoteWebDriver setupRemoteDriver() {
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("browserName", "chrome");
+        selenoidOptions.put("browserVersion", "109.0");
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+        try{
+            return new RemoteWebDriver(URI.create("http://149.154.71.152:4444/wd/hub").toURL(), capabilities);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Допустим("открыта страница по адресу {string}")
     public void открыта_страница_по_адресу(String string) {
-        driver = new ChromeDriver();
+        driver = setupRemoteDriver();
         System.setProperty("webdriwer.chrome.driver",
                 "D:\\Programming\\Project IBS\\task_5_cucumber\\src\\test\\resources\\chromedriver.exe");
 
-        driver.get("http://localhost:8080");
+        driver.get("http://149.154.71.152:8080/");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
     }
